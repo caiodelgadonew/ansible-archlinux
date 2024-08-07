@@ -1,0 +1,131 @@
+---
+- name: Download oh-my-zsh
+  block:
+    - name: Check if ~/.oh-my-zsh exists
+      ansible.builtin.stat:
+        path: '/home/{{ ansible_user_id}}/.oh-my-zsh'
+      register: oh_my_zsh
+
+    - name: Download Oh My Zsh installation script
+      get_url:
+        url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        dest: /tmp/install_ohmyzsh.sh
+      when: not oh_my_zsh.stat.exists
+
+- name: Run Oh My Zsh installation script
+  command: sh /tmp/install_ohmyzsh.sh --unattended
+  register: ohmyzsh_result
+  when: not oh_my_zsh.stat.exists
+  failed_when: "'FAILED' in ohmyzsh_result.stderr"
+
+- name: Change default shell to zsh
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
+  become: true
+  become_user: root
+
+- name: Download Powerlevel10k Zsh Theme
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: '/home/{{ ansible_user_id}}/.oh-my-zsh/custom/themes/powerlevel10k'
+    update: true
+    depth: 1
+
+- name: Configure Powerlevel10k as Zsh Theme
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.zshrc
+    state: present
+    regexp: '^ZSH_THEME'
+    line: 'ZSH_THEME="powerlevel10k/powerlevel10k"'
+
+- name: Configure Zsh to source .p10k.zsh 
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.zshrc
+    state: present
+    line: 'source ~/.p10k.zsh'
+
+- name: Customize Powerlevel10k
+  ansible.builtin.copy:
+    src: zsh_p10k
+    dest: '/home/{{ ansible_user_id}}/.p10k.zsh'
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: 0644
+
+- name: Disable Powerlevel10k configuration wizard
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.zshrc
+    state: present
+    regexp: '^POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD'
+    line: 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true'
+
+- name: Copy aliases to $ZSH_CUSTOM folder
+  ansible.builtin.copy:
+    src: zsh_aliases
+    dest: /home/{{ ansible_user_id }}/.oh-my-zsh/custom/aliases.zsh
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: 0644
+
+- name: Configure SSH Banner
+  block:
+  - name: Generate banner content using toilet
+    ansible.builtin.shell: 
+      cmd: toilet -f smblock -F border "{{ ssh_banner | default(ansible_hostname) }}"
+    register: banner_content
+    changed_when: false
+
+  - name: Check if the SSH banner file exists
+    ansible.builtin.stat:
+      path: /etc/ssh/ssh_banner
+    register: banner_stat
+
+  - name: Read the existing banner content
+    ansible.builtin.command:
+      cmd: cat /etc/ssh/ssh_banner
+    register: existing_banner_content
+    when: banner_stat.stat.exists
+    changed_when: false
+
+  - name: Configure SSH banner
+    ansible.builtin.copy:
+      content: "{{ banner_content.stdout }}"
+      dest: /etc/ssh/ssh_banner
+      owner: root
+      group: root
+      mode: '0644'
+    when: banner_stat.stat.exists == false or banner_content.stdout != existing_banner_content.stdout
+    become_user: root
+    notify: restart sshd
+
+  - name: Ensure file ends with a newline
+    ansible.builtin.lineinfile:
+      path: /etc/ssh/ssh_banner
+      line: ''
+      insertafter: EOF
+      state: present
+    become_user: root
+
+  - name: Configure SSH to use the new banner
+    ansible.builtin.lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^#?Banner '
+      line: 'Banner /etc/ssh/ssh_banner'
+    become_user: root
+    notify: restart sshd
+
+- name: Add tmux auto-start script to .zshrc with SSH check
+  ansible.builtin.blockinfile:
+    path: /home/{{ ansible_user_id }}/.zshrc
+    block: |
+      # Start tmux if not already inside a tmux session
+      if [[ -n "$SSH_TTY" && -z "$TMUX" ]]; then
+        if ! tmux has-session -t default 2>/dev/null; then
+          tmux new-session -s default
+        else
+          tmux attach-session -t default
+        fi
+      fi
+    state: present
+

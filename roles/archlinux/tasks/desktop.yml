@@ -1,0 +1,16 @@
+---
+- name: Install Desktop Environment
+  community.general.pacman:
+    name: '{{ item }}'
+    state: present
+  loop: '{{ desktop_packages }}'
+  become: true
+  become_user: root
+
+- name: Enable and start GDM service
+  ansible.builtin.systemd:
+    name: gdm
+    enabled: yes
+    state: started
+  become: true
+  become_user: root

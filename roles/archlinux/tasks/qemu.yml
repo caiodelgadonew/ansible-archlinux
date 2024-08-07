@@ -1,0 +1,25 @@
+---
+- name: Install qemu-guest-agent
+  yay:
+    name: qemu-guest-agent
+    state: present
+  become: true
+
+- name: Secure qemu-guest-agent
+  ansible.builtin.lineinfile:
+    path: /etc/qemu/qemu-ga.conf
+    regexp: ^# blacklist.*
+    line: 'block-rpcs = "guest-ssh-remove-authorized-keys,guest-ssh-add-authorized-keys,guest-ssh-get-authorized-keys,guest-get-users,guest-exec,guest-exec-status,guest-set-memory-blocks,guest-get-memory-blocks,guest-set-user-password,guest-get-fsinfo,guest-set-vcpus,guest-suspend-hybrid,guest-suspend-ram,guest-suspend-disk,guest-fstrim,guest-fsfreeze-thaw,guest-fsfreeze-freeze-list,guest-fsfreeze-freeze,guest-fsfreeze-status,guest-file-flush,guest-file-seek,guest-file-write,guest-file-read,guest-file-close,guest-file-open,guest-shutdown,guest-set-time,guest-sync,guest-sync-delimited"'
+  become: true
+  become_user: root
+  notify: restart qemu-guest-agent
+
+- name: Configure qemu-guest-agent logging 
+  ansible.builtin.lineinfile:
+    path: /etc/qemu/qemu-ga.conf
+    regexp: ^# logfile.*
+    line: "logfile = /var/log/qemu-agent-actions.log"
+  become: true
+  become_user: root
+  notify: restart qemu-guest-agent
+

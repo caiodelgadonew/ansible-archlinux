@@ -1,0 +1,36 @@
+---
+- name: Install Dotfiles
+  include_tasks: dotfiles.yml
+
+- name: Install YAY
+  include_tasks: yay_install.yml
+
+- name: Configure git globals
+  include_tasks: git.yml
+
+- name: Install Packages
+  include_tasks: yay_packages.yml
+
+- name: Install Hashicorp Software
+  include_tasks: hashicorp.yml
+
+- name: Install Dotfiles
+  include_tasks: dotfiles.yml
+
+- name: Install Catpuccin Themes
+  include_tasks: catppuccin.yml
+
+- name: Configure tmux
+  include_tasks: tmux.yml
+
+- name: Configure ZSH
+  include_tasks: zsh.yml
+
+- name: Install and configure qemu-gest-agent
+  include_tasks: qemu.yml
+  when: virtual_machine | default(false) | bool
+
+- name: Install Desktop Environment
+  include_tasks: desktop.yml
+  when: desktop_environment | default(false) | bool
+

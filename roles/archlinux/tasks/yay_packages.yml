@@ -1,0 +1,15 @@
+---
+- name: Install Software with YAY
+  yay:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ yay_packages }}"
+  become: true
+
+- name: Create symlink from nvim to vim
+  ansible.builtin.file:
+    src: /usr/bin/nvim
+    dest: /usr/bin/vim
+    state: link
+  become_user: root

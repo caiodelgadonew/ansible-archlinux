@@ -1,0 +1,8 @@
+---
+- name: Install hashicorp Tools
+  yay:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ hashicorp_packages }}"
+  become: true

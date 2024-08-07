@@ -1,0 +1,39 @@
+---
+- name: Ensure passwordless sudo for Ansible user
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/00_{{ ansible_user_id }}
+    state: present
+    regexp: '^{{ ansible_user_id }}'
+    line: '{{ ansible_user_id }} ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  become: true
+  become_user: root
+
+- name: Install Software with Pacman
+  community.general.pacman:
+    name: '{{ item }}'
+    state: present
+  loop: '{{ pacman_packages }}'
+  become: true
+  become_user: root
+
+- name: Check if yay binary exists
+  ansible.builtin.stat:
+    path: /usr/bin/yay
+  register: yay
+
+- name: Clone yay
+  ansible.builtin.git:
+    repo: https://aur.archlinux.org/yay-bin.git
+    dest: "/tmp/yay"
+    update: true
+    depth: 1
+  when: yay.stat.exists == False
+
+- name: Build and install yay
+  ansible.builtin.command:
+    chdir: "/tmp/yay"
+    cmd: "makepkg -si --noconfirm"
+    creates: /usr/bin/yay
+  when: yay.stat.exists == False
+

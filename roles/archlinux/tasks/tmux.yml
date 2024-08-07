@@ -1,0 +1,34 @@
+---
+- name: Install tmux tpm
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm.git
+    dest: '/home/{{ ansible_user_id}}/.tmux/plugins/tpm'
+    depth: 1
+
+- name: Stow tmux
+  block:
+    - name: Check if ~/.tmux.conf exists
+      ansible.builtin.stat:
+        path: '/home/{{ ansible_user_id}}/.tmux.conf'
+      register: tmux
+
+    - name: stow tmux config
+      ansible.builtin.command:
+        chdir: '/home/{{ ansible_user_id}}/dotfiles'
+        cmd: stow tmux
+      when: not tmux.stat.exists
+
+- name: Install tmux plugins
+  block:
+    - name: Check the number of installed plugins
+      ansible.builtin.shell: 
+        cmd: "grep '@plugin' /home/{{ ansible_user_id }}/.tmux.conf | wc -l"
+      register: tmux_plugins
+      changed_when: false
+
+    - name: Install tmux plugins
+      ansible.builtin.shell:
+        chdir: '/home/{{ ansible_user_id}}/.tmux/plugins/tpm/bin'
+        cmd: ./install_plugins | wc -l
+      register: install_tmux_plugins
+      changed_when: install_tmux_plugins.stdout | int != tmux_plugins.stdout | int

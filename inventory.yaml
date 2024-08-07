@@ -1,0 +1,19 @@
+arch:
+  children:
+    personal:
+    work:
+
+personal:
+  hosts:
+    arch-dev-vm:
+      virtual_machine: true
+      desktop_environment: true
+
+    synology-vm:
+      virtual_machine: true
+      desktop_environment: true
+
+work:
+  hosts:
+    workbox:
+      virtual_machine: true

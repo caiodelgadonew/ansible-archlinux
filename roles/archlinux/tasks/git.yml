@@ -1,0 +1,40 @@
+---
+- name: Ensure SSH key for github.com is in known_hosts
+  ansible.builtin.known_hosts:
+    name: github.com
+    key: "{{ lookup('pipe', 'ssh-keyscan github.com') }}"
+
+- name: Ensure SSH key for gitlab.com is in known_hosts
+  ansible.builtin.known_hosts:
+    name: gitlab.com
+    key: "{{ lookup('pipe', 'ssh-keyscan gitlab.com') }}"
+
+- name: Set git pull mode as rebase
+  community.general.git_config:
+    name: pull.rebase
+    scope: global
+    value: true
+
+- name: Set git autoSetupRemote
+  community.general.git_config:
+    name: push.autoSetupRemote
+    scope: global
+    value: true
+
+- name: Set git user name
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: "{{ git_name }}"
+
+- name: Set git user email
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: "{{ git_email }}"
+
+- name: Set git autocrlf to false
+  community.general.git_config:
+    name: core.autocrlf
+    scope: global
+    value: false

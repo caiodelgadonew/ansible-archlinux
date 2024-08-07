@@ -1,0 +1,29 @@
+---
+- name: Ensure ~/.config/themes directory exists
+  ansible.builtin.file:
+    path: /home/{{ ansible_user_id }}/.config/themes
+    state: directory
+
+- name: Catppuccin Bashtop
+  block:
+    - name: Ensure Bashtop Themes dir exists
+      ansible.builtin.file:
+        path: /home/{{ ansible_user_id }}/.config/bashtop/themes
+        state: directory
+
+    - name: Copy Catpuccin Bashtop Theme  
+      ansible.builtin.copy:
+        src: files/btop_catppuccin_mocha.theme
+        dest: .config/bashtop/themes/catppuccin_mocha.theme
+
+    - name: Configure Catppuccin Bashtop
+      ansible.builtin.lineinfile:
+        path: '/home/{{ ansible_user_id }}/.config/bashtop/bashtop.cfg'
+        regexp: '^color_theme'
+        line: 'color_theme="themes/catppuccin_mocha"'
+        create: true
+
+- name: Copy Catpuccin Alacritty Theme  
+  ansible.builtin.copy:
+    src: files/alacritty_catppuccin_mocha.toml
+    dest: .config/themes/catppuccin-mocha.toml

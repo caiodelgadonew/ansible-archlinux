@@ -1,0 +1,60 @@
+---
+desktop_packages:
+  - alacritty
+  - firefox
+  - flameshot
+  - gnome
+  - i3
+  - virtualbox
+  - xorg
+
+hashicorp_packages:
+  - consul
+  - nomad
+  - tfenv
+  - terraform-docs
+  - vagrant
+  - vault
+
+pacman_packages:
+  - base-devel
+  - curl
+  - git
+
+yay_packages:
+  - 1password
+  - ansible
+  - bashtop
+  - bat
+  - bottom
+  - curlie
+  - dive
+  - dog
+  - docker
+  - duf
+  - dust
+  - exa
+  - fd
+  - fzf
+  - glow
+  - htop
+  - httpie
+  - iftop
+  - ipcalc
+  - jq
+  - kitty
+  - lazygit
+  - less
+  - lsd
+  - mdless
+  - neovim
+  - netcat
+  - ripgrep
+  - stow
+  - tmux
+  - tree
+  - toilet
+  - wget
+  - xh
+  - zoxide
+  - zsh

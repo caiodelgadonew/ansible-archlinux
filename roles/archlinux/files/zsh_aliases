@@ -1,0 +1,4 @@
+# Aliases 
+alias tfdocs="terraform-docs markdown table --output-mode replace --output-file README.md ."
+alias git-fuck="git add .; git commit --amend --no-edit; git push -f"
+alias lg="lazygit"

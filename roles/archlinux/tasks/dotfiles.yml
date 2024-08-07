@@ -1,0 +1,34 @@
+---
+- name: sync dotfiles
+  ansible.builtin.git:
+    # repo: git@github.com:caiodelgadonew/dotfiles.git
+    repo: https://github.com/caiodelgadonew/dotfiles.git
+    dest: '/home/{{ ansible_user_id}}/dotfiles'
+    update: true
+    force: true
+    depth: 1
+
+- name: Stow tmux
+  ansible.builtin.command:
+    chdir: '/home/{{ ansible_user_id}}/dotfiles'
+    cmd: stow tmux
+    creates: '/home/{{ ansible_user_id }}/.tmux.conf'
+
+- name: stow alacritty
+  ansible.builtin.command:
+    chdir: '/home/{{ ansible_user_id}}/dotfiles'
+    cmd: stow alacritty
+    creates: '/home/{{ ansible_user_id }}/.config/alacritty.toml'
+
+- name: stow kitty
+  ansible.builtin.command:
+    chdir: '/home/{{ ansible_user_id}}/dotfiles'
+    cmd: stow kitty
+    creates: '/home/{{ ansible_user_id }}/.config/kitty/kitty.conf'
+
+- name: Stow neovim
+  ansible.builtin.command:
+    chdir: '/home/{{ ansible_user_id}}/dotfiles'
+    cmd: stow nvim
+    creates: '/home/{{ ansible_user_id }}/.config/nvim/'
+
