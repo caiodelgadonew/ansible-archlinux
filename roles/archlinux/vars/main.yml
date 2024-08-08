@@ -1,5 +1,6 @@
 ---
 desktop_packages:
+  - 1password
   - alacritty
   - firefox
   - flameshot
@@ -11,8 +12,8 @@ desktop_packages:
 hashicorp_packages:
   - consul
   - nomad
-  - tfenv
   - terraform-docs
+  - tfenv
   - vagrant
   - vault
 
@@ -22,15 +23,16 @@ pacman_packages:
   - git
 
 yay_packages:
-  - 1password
+  - 1password-cli
   - ansible
+  - aws-cli-v2
   - bashtop
   - bat
   - bottom
   - curlie
   - dive
-  - dog
   - docker
+  - dog
   - duf
   - dust
   - exa
@@ -48,12 +50,14 @@ yay_packages:
   - lsd
   - neovim
   - netcat
+  - npm
   - ripgrep
   - ruby-mdless
   - stow
   - tmux
-  - tree
   - toilet
+  - tree
+  - ttf-sourcecodepro-nerd
   - wget
   - xh
   - zoxide

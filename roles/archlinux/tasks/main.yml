@@ -1,7 +1,4 @@
 ---
-- name: Install Dotfiles
-  include_tasks: dotfiles.yml
-
 - name: Install YAY
   include_tasks: yay_install.yml
 

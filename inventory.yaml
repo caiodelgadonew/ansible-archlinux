@@ -13,6 +13,9 @@ personal:
       virtual_machine: true
       desktop_environment: true
 
+    lenovo-arch:
+      desktop_environment: true
+
 work:
   hosts:
     workbox:
