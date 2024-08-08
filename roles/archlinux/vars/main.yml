@@ -46,10 +46,10 @@ yay_packages:
   - lazygit
   - less
   - lsd
-  - mdless
   - neovim
   - netcat
   - ripgrep
+  - ruby-mdless
   - stow
   - tmux
   - tree
