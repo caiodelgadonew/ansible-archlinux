@@ -14,3 +14,11 @@
     state: started
   become: true
   become_user: root
+
+- name: Enable and start Bluetooth service
+  ansible.builtin.systemd:
+    name: bluetooth
+    enabled: yes
+    state: started
+  become: true
+  become_user: root
