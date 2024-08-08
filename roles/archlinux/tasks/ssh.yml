@@ -1,0 +1,47 @@
+- name: Configure SSH Banner
+  block:
+  - name: Generate banner content using toilet
+    ansible.builtin.shell:
+      cmd: toilet -f smblock -F border "{{ ssh_banner_text | default(ansible_hostname) }}"
+    register: banner_content
+    changed_when: false
+
+  - name: Check if the SSH banner file exists
+    ansible.builtin.stat:
+      path: /etc/ssh/ssh_banner
+    register: banner_stat
+
+  - name: Read the existing banner content
+    ansible.builtin.command:
+      cmd: cat /etc/ssh/ssh_banner
+    register: existing_banner_content
+    when: banner_stat.stat.exists
+    changed_when: false
+
+  - name: Configure SSH banner
+    ansible.builtin.copy:
+      content: "{{ banner_content.stdout }}"
+      dest: /etc/ssh/ssh_banner
+      owner: root
+      group: root
+      mode: '0644'
+    when: banner_stat.stat.exists == false or banner_content.stdout != existing_banner_content.stdout
+    become_user: root
+    notify: restart sshd
+
+  - name: Ensure file ends with a newline
+    ansible.builtin.lineinfile:
+      path: /etc/ssh/ssh_banner
+      line: ''
+      insertafter: EOF
+      state: present
+    become_user: root
+
+  - name: Configure SSH to use the new banner
+    ansible.builtin.lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^#?Banner '
+      line: 'Banner /etc/ssh/ssh_banner'
+    become_user: root
+    notify: restart sshd
+

@@ -26,6 +26,10 @@
 - name: Configure ZSH
   include_tasks: zsh.yml
 
+- name: Configure SSH Banner
+  include_tasts: ssh.yml
+  when: enable_ssh_banner | default (false) | bool
+
 - name: Install and configure qemu-gest-agent
   include_tasks: qemu.yml
   when: virtual_machine | default(false) | bool
