@@ -4,10 +4,14 @@ desktop_packages:
   - alacritty
   - bluez
   - bluez-utils
+  - dmenu
   - firefox
   - flameshot
   - gnome
   - i3
+  - peek
+  - picom
+  - polybar
   - virtualbox
   - xorg
 
