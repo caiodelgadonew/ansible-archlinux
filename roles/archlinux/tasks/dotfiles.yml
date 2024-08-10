@@ -14,12 +14,6 @@
     cmd: stow tmux
     creates: '/home/{{ ansible_user_id }}/.tmux.conf'
 
-- name: stow alacritty
-  ansible.builtin.command:
-    chdir: '/home/{{ ansible_user_id}}/dotfiles'
-    cmd: stow alacritty
-    creates: '/home/{{ ansible_user_id }}/.config/alacritty.toml'
-
 - name: stow kitty
   ansible.builtin.command:
     chdir: '/home/{{ ansible_user_id}}/dotfiles'

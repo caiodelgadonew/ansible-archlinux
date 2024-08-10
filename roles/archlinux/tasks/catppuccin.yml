@@ -23,7 +23,3 @@
         line: 'color_theme="themes/catppuccin_mocha"'
         create: true
 
-- name: Copy Catpuccin Alacritty Theme  
-  ansible.builtin.copy:
-    src: files/alacritty_catppuccin_mocha.toml
-    dest: .config/themes/catppuccin-mocha.toml

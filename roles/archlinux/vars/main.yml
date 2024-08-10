@@ -1,7 +1,6 @@
 ---
 desktop_packages:
   - 1password
-  - alacritty
   - bluez
   - bluez-utils
   - dmenu
