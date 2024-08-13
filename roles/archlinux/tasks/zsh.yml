@@ -68,17 +68,27 @@
     group: "{{ ansible_user_id }}"
     mode: 0644
 
-- name: Add tmux auto-start script to .zshrc with SSH check
+- name: Fix SSH agent forwarder and add tmux session management
   ansible.builtin.blockinfile:
     path: /home/{{ ansible_user_id }}/.zshrc
     block: |
-      # Start tmux if not already inside a tmux session
-      if [[ -n "$SSH_TTY" && -z "$TMUX" ]]; then
-        if ! tmux has-session -t default 2>/dev/null; then
-          tmux new-session -s default
-        else
-          tmux attach-session -t default
-        fi
+      # SSH Agent forwarder fix and tmux session management
+      if [[ -n "$SSH_TTY" ]]; then
+          # If not inside tmux, create or update the SSH_AUTH_SOCK symlink
+          if [ -z "$TMUX" ]; then
+              ln -s -f $SSH_AUTH_SOCK /tmp/SSH_AUTH_SOCK
+          fi
+      
+          export SSH_AUTH_SOCK=/tmp/SSH_AUTH_SOCK
+      
+          # Start tmux if not already inside a tmux session
+          if [ -z "$TMUX" ]; then
+              if ! tmux has-session -t default 2>/dev/null; then
+                  tmux new-session -s default
+              else
+                  tmux attach-session -t default
+              fi
+          fi
       fi
     state: present
 
