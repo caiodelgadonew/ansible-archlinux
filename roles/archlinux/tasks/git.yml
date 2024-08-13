@@ -38,3 +38,10 @@
     name: core.autocrlf
     scope: global
     value: false
+
+- name: Set git default editor to nvim
+  community.general.git_config:
+    name: core.editor
+    scope: global
+    value: "nvim"
+
