@@ -7,6 +7,15 @@
   loop: "{{ yay_packages }}"
   become: true
 
+# Separate step since its in beta and you need to have access to it
+- name: Install Ghostty
+  yay:
+    name: ghostty-git
+    state: present
+    update_cache: yes
+  become: true
+  when: ghostty_install | default (false) | bool
+
 - name: Create symlink from nvim to vim
   ansible.builtin.file:
     src: /usr/bin/nvim

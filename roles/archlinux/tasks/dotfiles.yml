@@ -20,6 +20,12 @@
     cmd: stow kitty
     creates: '/home/{{ ansible_user_id }}/.config/kitty/kitty.conf'
 
+- name: Stow ghostty
+  ansible.builtin.command:
+    chdir: '/home/{{ ansible_user_id}}/dotfiles'
+    cmd: stow ghostty
+    creates: '/home/{{ ansible_user_id }}/.config/ghostty/'
+
 - name: Stow neovim
   ansible.builtin.command:
     chdir: '/home/{{ ansible_user_id}}/dotfiles'

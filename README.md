@@ -30,6 +30,7 @@ git_name: User Name         # same as git config --global user.name
 git_email: user@email.com   # same as git config --global user.email
 virtual_machine: true       # install and secure qemu-guest-agent    [true/false]
 desktop_environment: true   # install desktop environment            [true/false]
+ghostty_install: true       # install ghostty (beta access)          [true/false]
 ```
 
 Check also [archlinux.yml](archlinux.yml) to configure your `become_user`
