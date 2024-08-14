@@ -74,6 +74,13 @@
     state: present
     line: 'source <(fzf --zsh)'
 
+- name: Export EDITOR variable to zsh 
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.zshrc
+    state: present
+    regexp: '^export EDITOR'
+    line: 'export EDITOR=nvim'
+
 - name: Fix SSH agent forwarder and add tmux session management
   ansible.builtin.blockinfile:
     path: /home/{{ ansible_user_id }}/.zshrc
