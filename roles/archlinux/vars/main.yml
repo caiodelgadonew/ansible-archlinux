@@ -66,5 +66,6 @@ yay_packages:
   - ttf-sourcecodepro-nerd
   - wget
   - xh
+  - yazi
   - zoxide
   - zsh
