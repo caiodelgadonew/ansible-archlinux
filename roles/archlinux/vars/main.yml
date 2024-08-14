@@ -38,6 +38,7 @@ yay_packages:
   - dive
   - docker
   - dog
+  - downgrade
   - duf
   - dust
   - exa
