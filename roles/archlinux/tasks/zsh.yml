@@ -68,6 +68,12 @@
     group: "{{ ansible_user_id }}"
     mode: 0644
 
+- name: Configure Zsh to source fzf completion 
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.zshrc
+    state: present
+    line: 'source <(fzf --zsh)'
+
 - name: Fix SSH agent forwarder and add tmux session management
   ansible.builtin.blockinfile:
     path: /home/{{ ansible_user_id }}/.zshrc
