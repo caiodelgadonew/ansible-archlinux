@@ -61,8 +61,8 @@
     line: 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true'
 
 - name: Copy aliases to $ZSH_CUSTOM folder
-  ansible.builtin.copy:
-    src: zsh_aliases
+  ansible.builtin.template:
+    src: zsh_aliases.j2
     dest: /home/{{ ansible_user_id }}/.oh-my-zsh/custom/aliases.zsh
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
