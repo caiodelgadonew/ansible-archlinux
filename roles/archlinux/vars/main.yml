@@ -54,6 +54,7 @@ yay_packages:
   - lazygit
   - less
   - lsd
+  - minio-client
   - neovim
   - netcat
   - npm
