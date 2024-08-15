@@ -1,6 +1,5 @@
 ---
 desktop_packages:
-  - 1password
   - bluez
   - bluez-utils
   - dmenu
@@ -28,7 +27,6 @@ pacman_packages:
   - git
 
 yay_packages:
-  - 1password-cli
   - ansible
   - aws-cli-v2
   - bashtop
