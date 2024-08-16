@@ -14,7 +14,7 @@
     - name: Copy Catpuccin Bashtop Theme  
       ansible.builtin.copy:
         src: files/btop_catppuccin_mocha.theme
-        dest: .config/bashtop/themes/catppuccin_mocha.theme
+        dest: /home/{{ ansible_user_id }}/.config/bashtop/themes/catppuccin_mocha.theme
 
     - name: Configure Catppuccin Bashtop
       ansible.builtin.lineinfile:
