@@ -11,7 +11,7 @@ def run_command(module, cmd):
         return e.stdout, e.stderr, e.returncode
 
 def check_package_installed(package):
-    cmd = ['pacman', '-Q', package]
+    cmd = ['yay', '-Q', package]
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     return result.returncode == 0
 
