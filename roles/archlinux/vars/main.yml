@@ -10,7 +10,6 @@ desktop_packages:
   - peek
   - picom
   - polybar
-  - ulauncher
   - virtualbox
   - xorg
 

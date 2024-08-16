@@ -7,17 +7,17 @@
   become: true
   become_user: root
 
+# workaround since the module cant find ulauncher 
+- name: Install ulauncher using yay
+  command: yay -S --noconfirm ulauncher
+  register: install_result
+  failed_when: install_result.rc != 0
+  changed_when: "'installed' in install_result.stdout or 'upgraded' in install_result.stdout"
+  ignore_errors: no
+
 - name: Enable and start GDM service
   ansible.builtin.systemd:
     name: gdm
-    enabled: yes
-    state: started
-  become: true
-  become_user: root
-
-- name: Enable and start ULauncher service
-  ansible.builtin.systemd:
-    name: ulauncher
     enabled: yes
     state: started
   become: true
