@@ -1,0 +1,10 @@
+---
+- name: Run Neovim in headless mode to sync plugins
+  shell: nvim --headless "+Lazy! sync" +qall  > /dev/null 2>&1
+  register: nvim_sync_result
+  changed_when: false
+
+- name: Fail if sync fails
+  fail:
+    msg: "Neovim plugin sync failed!"
+  when: nvim_sync_result.rc != 0
