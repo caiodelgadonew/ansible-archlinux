@@ -9,7 +9,7 @@ The following steps are required prior to the execution of the playbook
 - Install Extra Packages:
 
 ```bash
-pacman -S git openssh python3
+pacman -S git openssh python
 ```
 
 - Enable sshd service
