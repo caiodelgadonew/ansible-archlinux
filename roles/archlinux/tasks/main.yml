@@ -14,7 +14,7 @@
 - name: Install Dotfiles
   include_tasks: dotfiles.yml
 
-- name: Install Catpuccin Themes
+- name: Install Catppuccin Themes
   include_tasks: catppuccin.yml
 
 - name: Configure tmux
