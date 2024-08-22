@@ -16,6 +16,8 @@ personal:
 
 work:
   hosts:
+    workbook:
+      desktop_environment: true
     workbox:
       virtual_machine: true
 

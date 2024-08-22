@@ -13,7 +13,6 @@
     name: ghostty-git
     state: present
     update_cache: yes
-  become: true
   when: ghostty_install | default (false) | bool
 
 - name: Create symlink from nvim to vim
