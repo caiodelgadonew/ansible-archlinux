@@ -32,7 +32,6 @@ yay_packages:
   - bashtop
   - bat
   - bottom
-  - chef-workstation
   - cifs-utils
   - curlie
   - dive
