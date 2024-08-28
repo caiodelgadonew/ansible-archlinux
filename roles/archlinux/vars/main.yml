@@ -64,6 +64,8 @@ yay_packages:
   - tmux
   - toilet
   - tree
+  - tree-sitter
+  - tree-sitter-cli
   - ttf-sourcecodepro-nerd
   - wget
   - xh
