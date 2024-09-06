@@ -23,6 +23,9 @@
 - name: Configure ZSH
   include_tasks: zsh.yml
 
+- name: Configure SSH Agent
+  include_tasks: ssh_agent.yml
+
 - name: Sync nvim plugins
   include_tasks: nvim.yml
 

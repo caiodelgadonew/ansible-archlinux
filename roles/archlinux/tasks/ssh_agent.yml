@@ -1,0 +1,15 @@
+- name: Enable SSH-Agent for Yubikey
+  ansible.builtin.blockinfile:
+    path: /home/{{ ansible_user_id }}/.zshrc
+    block: |
+      eval $(gpg-agent --daemon 2>/dev/null)
+      export GPG_TTY=$(tty)
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      if [ -f "${HOME}/.gpg-agent-info" ]; then
+        . "${HOME}/.gpg-agent-info"
+        export GPG_AGENT_INFO
+      fi
+
+
+    state: present
+

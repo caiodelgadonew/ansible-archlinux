@@ -7,6 +7,10 @@ arch:
 personal:
   hosts:
 
+    serenade:
+      desktop_environment: true
+      ghostty_install: true
+
     synology-vm:
       virtual_machine: true
       desktop_environment: true
