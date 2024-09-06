@@ -6,6 +6,9 @@ desktop_packages:
   - firefox
   - flameshot
   - gnome
+  - gnome-browser-connector
+  - gnome-shell-extension-espresso-git
+  - gnome-tweaks
   - i3
   - peek
   - picom
