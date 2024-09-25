@@ -9,12 +9,13 @@ desktop_packages:
   - gnome-browser-connector
   - gnome-shell-extension-espresso-git
   - gnome-tweaks
-  - i3
+  - hyprland-git
+  - hyprpaper
   - peek
-  - picom
-  - polybar
   - timeshift
+  - ttf-font-awesome
   - virtualbox
+  - waybar
   - xorg
 
 hashicorp_packages:

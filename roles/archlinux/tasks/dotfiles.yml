@@ -32,27 +32,6 @@
     cmd: stow nvim
     creates: '/home/{{ ansible_user_id }}/.config/nvim/'
 
-- name: Stow i3
-  ansible.builtin.command:
-    chdir: '/home/{{ ansible_user_id}}/dotfiles'
-    cmd: stow i3
-    creates: '/home/{{ ansible_user_id }}/.config/i3/'
-  when: desktop_environment | default(false) | bool
-
-- name: Stow picom
-  ansible.builtin.command:
-    chdir: '/home/{{ ansible_user_id}}/dotfiles'
-    cmd: stow picom
-    creates: '/home/{{ ansible_user_id }}/.config/picom/'
-  when: desktop_environment | default(false) | bool
-
-- name: Stow polybar
-  ansible.builtin.command:
-    chdir: '/home/{{ ansible_user_id}}/dotfiles'
-    cmd: stow polybar
-    creates: '/home/{{ ansible_user_id }}/.config/polybar/'
-  when: desktop_environment | default(false) | bool
-
 - name: Stow ulauncher
   ansible.builtin.command:
     chdir: '/home/{{ ansible_user_id}}/dotfiles'
