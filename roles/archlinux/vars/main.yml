@@ -1,5 +1,6 @@
 ---
 desktop_packages:
+  - balena-etcher
   - bluez
   - bluez-utils
   - dmenu
