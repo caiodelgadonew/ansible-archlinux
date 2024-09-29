@@ -74,6 +74,12 @@
     state: present
     line: 'source <(fzf --zsh)'
 
+- name: Configure Zsh to source zoxide
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.zshrc
+    state: present
+    line: 'eval "$(zoxide init zsh)"'
+
 - name: Export EDITOR variable to zsh 
   ansible.builtin.lineinfile:
     path: /home/{{ ansible_user_id }}/.zshrc
