@@ -20,6 +20,8 @@ personal:
 
 work:
   hosts:
+    workstation:
+      desktop_environment: true
     workbook:
       desktop_environment: true
     workbox:
