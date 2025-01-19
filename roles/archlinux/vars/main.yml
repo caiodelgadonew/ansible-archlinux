@@ -33,7 +33,7 @@ pacman_packages:
   - git
 
 yay_packages:
-  - ansible
+  - ansible-core
   - bashtop
   - bat
   - bottom
