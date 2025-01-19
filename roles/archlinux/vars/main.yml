@@ -34,7 +34,6 @@ pacman_packages:
 
 yay_packages:
   - ansible
-  - aws-cli-v2
   - bashtop
   - bat
   - bottom
@@ -43,7 +42,6 @@ yay_packages:
   - dive
   - docker
   - dog
-  - downgrade
   - duf
   - dust
   - exa
@@ -65,7 +63,6 @@ yay_packages:
   - netcat
   - npm
   - ripgrep
-  - ruby-mdless
   - stow
   - tmux
   - toilet
