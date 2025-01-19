@@ -45,6 +45,7 @@ yay_packages:
   - duf
   - dust
   - exa
+  - fastfetch
   - fd
   - fuse-common
   - fzf
@@ -62,6 +63,7 @@ yay_packages:
   - neovim
   - netcat
   - npm
+  - onefetch
   - ripgrep
   - stow
   - tmux
